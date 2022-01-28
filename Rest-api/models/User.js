@@ -33,11 +33,20 @@ const userSchema = mongoose.Schema({
     },
     following: {
         type: Array,
-        default: ""
+        default: []
     },
     isAdmin: {
         type: Boolean,
         default: false
+    },
+    desc: {
+        type: String,
+        max: 50,
+        default:""
+    },
+    city: {
+        type: String,
+        max: 50
     }
 },
 {timestamps : true}
