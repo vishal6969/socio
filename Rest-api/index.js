@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
+const postRoute = require("./routes/post");
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(morgan("common"));
 
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/post", postRoute);
 
 app.listen("8800", () => {
     console.log("server working");
