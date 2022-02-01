@@ -1,16 +1,7 @@
 import React from 'react';
 import "./navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faCommentDots } from "@fortawesome/free-solid-svg-icons";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
-
-library.add(faUser);
-library.add(faEdit);
-library.add(faCommentDots);
-library.add(faBell);
+import { faUser,faCommentDots,faBell } from "@fortawesome/free-solid-svg-icons"
 
 function Navbar(params) {
     return (
@@ -20,7 +11,6 @@ function Navbar(params) {
         </div>
         <div className="topbarCenter">
           <div className="searchbar">
-            <FontAwesomeIcon icon="edit" />
             <input
               placeholder="Search for friend, post or video"
               className="searchInput"
@@ -34,18 +24,19 @@ function Navbar(params) {
           </div>
           <div className="topbarIcons">
             <div className="topbarIconItem">
-              <FontAwesomeIcon icon="user" />
+              <FontAwesomeIcon icon={faUser} />
               <span className="topbarIconBadge">1</span>
             </div>
             <div className="topbarIconItem">
-              <FontAwesomeIcon icon="comment-dots" />
+              <FontAwesomeIcon icon={faCommentDots} />
               <span className="topbarIconBadge">2</span>
             </div>
             <div className="topbarIconItem">
-              <FontAwesomeIcon icon="bell" />
+              <FontAwesomeIcon icon={faBell} />
               <span className="topbarIconBadge">1</span>
             </div>
           </div>
+          <img src="/assets/person/1.jpeg" alt="" className="topbarImg" />
         </div>
       </div>
     );

@@ -34,14 +34,10 @@
   align-items: center;
 }
 
-.searchIcon {
-  font-size: 20px !important;
-  margin-left: 25px;
-}
-
 .searchInput {
   border: none;
   width: 70%;
+  margin-left: 20px;
 }
 
 .searchInput:focus {
