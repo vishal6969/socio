@@ -35,10 +35,12 @@
   font-size: 18px;
   font-weight: 500;
   margin-bottom: 20px;
+  margin-left: 10px;
 }
 
 .rightbarInfo{
   margin-bottom: 30px;
+  margin-left: 10px;
 }
 
 .rightbarInfoItem{

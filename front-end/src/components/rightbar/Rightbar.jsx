@@ -65,10 +65,8 @@ const ProfileRightbar = () => {
   );
 };
 return (
-  <div className="rightbar">
     <div className="rightbarWrapper">
       {user ? <ProfileRightbar /> : <HomeRightbar />}
     </div>
-  </div>
 );
 }
