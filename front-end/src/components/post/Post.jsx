@@ -22,7 +22,7 @@ export default function Post({ post }) {
           <div className="postTopLeft">
             <img
               className="postProfileImg"
-              src={"assets/" + user[0].profilePicture}
+              src={"/assets/" + user[0].profilePicture}
               alt=""
             />
             <span className="postUsername">{user[0].username}</span>
@@ -34,7 +34,7 @@ export default function Post({ post }) {
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={"assets/" + post.photo} alt="" />
+          <img className="postImg" src={"/assets/" + post.photo} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
@@ -47,7 +47,7 @@ export default function Post({ post }) {
             <img
               className="likeIcon"
               onClick = {likeHandler}
-              src="assets/heart.png"
+              src="/assets/heart.png"
               alt=""
             />
             <span className="postLikeCounter">{like} people like it</span>

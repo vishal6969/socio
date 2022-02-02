@@ -53,7 +53,7 @@ const ProfileRightbar = () => {
         {Users.map((friend) => (
           <div key={friend.id} className="rightbarFollowing">
               <img
-                src={"assets/"+friend.profilePicture}
+                src={"/assets/"+friend.profilePicture}
                 alt=""
                 className="rightbarFollowingImg"
               />

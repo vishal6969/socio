@@ -4,11 +4,19 @@ import { Users } from "../src/dummyData";
 import Login from "../src/pages/login/Login";
 import Register from "../src/pages/register/Register";
 
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
     <>
-      <Register/>
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/" element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/profile/:username" element={<Profile user={ Users[0]}/>}></Route>
+          <Route path="/register" element={<Register />}></Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

@@ -1,13 +1,16 @@
 import React from 'react';
 import "./navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser,faCommentDots,faBell } from "@fortawesome/free-solid-svg-icons"
+import { faUser, faCommentDots, faBell } from "@fortawesome/free-solid-svg-icons";
+import { Link } from 'react-router-dom';
 
 function Navbar(params) {
     return (
       <div className="topbarContainer">
         <div className="topbarLeft">
-          <span className="logo">Socio</span>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <span className="logo">Socio</span>
+          </Link>
         </div>
         <div className="topbarCenter">
           <div className="searchbar">

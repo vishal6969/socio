@@ -4,7 +4,9 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
 
-export default function Profile({user}) {
+export default function Profile({ user }) {
+
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <>
       <Navbar />
@@ -15,12 +17,12 @@ export default function Profile({user}) {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src="assets/post/6.jpeg"
+                src="/assets/post/2.jpeg"
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src="assets/person/9.jpeg"
+                src="/assets/person/3.jpeg"
                 alt=""
               />
             </div>
@@ -30,7 +32,7 @@ export default function Profile({user}) {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed/>
+            <Feed />
             <Rightbar user={user} />
           </div>
         </div>

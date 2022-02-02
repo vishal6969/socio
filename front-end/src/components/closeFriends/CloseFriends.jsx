@@ -4,7 +4,7 @@ export default function CloseFriends({ user }) {
   return (
     <li className="sidebarFriend">
       <img
-        src={"assets/" + user.profilePicture}
+        src={"/assets/" + user.profilePicture}
         alt=""
         className="sidebarFriendImg"
       />
