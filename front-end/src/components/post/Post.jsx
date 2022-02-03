@@ -1,32 +1,45 @@
 import "./post.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Users } from "../../dummyData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { format } from "timeago.js";
+import { Link } from "react-router-dom";
 
 export default function Post({ post }) {
 
-  const user = Users.filter((u) => (u.id === post.userId));
-
-  const [like, setLike] = useState(post.like);
+  const [like, setLike] = useState(post.likes.length);
   const [isLike, setIsLike] = useState(false);
+  const [user, setUser] = useState({});
 
   const likeHandler = () => {
-    setLike(isLike ? like - 1 : like + 1);
+    setLike(isLike ? like-1 : like+1);
     setIsLike(!isLike);
   }
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`/user?userId=${post.userId}`);
+      setUser(res.data);
+    };
+
+    fetchUser();
+  }, [post.userId]);
+
   return (
     <div className="post">
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
+            <Link to={`/profile/${user.username}`}>
             <img
               className="postProfileImg"
-              src={"/assets/" + user[0].profilePicture}
+              src={user.profilePhoto||"/assets/person/noAvatar.png"}
               alt=""
-            />
-            <span className="postUsername">{user[0].username}</span>
-            <span className="postDate">{post.date}</span>
+              />
+              </Link>
+            <span className="postUsername">{user.username}</span>
+            <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
             <FontAwesomeIcon icon={faPlus} />
@@ -34,7 +47,7 @@ export default function Post({ post }) {
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={"/assets/" + post.photo} alt="" />
+          <img className="postImg" src={post.img} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">

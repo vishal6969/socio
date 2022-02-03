@@ -3,10 +3,23 @@ import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function Profile({ user }) {
+export default function Profile() {
+  const [user, setUser] = useState({});
+  const username = useParams().username;
 
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`/user?username=${username}`);
+      setUser(res.data);
+    };
+
+    fetchUser();
+  }, [username]);
+
   return (
     <>
       <Navbar />
@@ -17,12 +30,12 @@ export default function Profile({ user }) {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src="/assets/post/2.jpeg"
+                src={user.coverPhoto || "/assets/person/noCover.png"}
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src="/assets/person/3.jpeg"
+                src={user.profilePhoto || "/assets/person/noAvatar.png"}
                 alt=""
               />
             </div>
@@ -32,7 +45,7 @@ export default function Profile({ user }) {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed />
+            <Feed username={username} />
             <Rightbar user={user} />
           </div>
         </div>
