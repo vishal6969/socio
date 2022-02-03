@@ -1,14 +1,24 @@
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 import "./login.css";
-
+import { loginCall } from "../../apiCalls";
+import { AuthContext } from "../../context/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+ 
 export default function Login() {
 
   const email = useRef();
   const password = useRef();
+  const { isFetching, dispatch } = useContext(AuthContext);
+
   const clickHandler = (e) => {
     e.preventDefault();
-    console.log(email.current.value+" "+password.current.value);
-  }
+    loginCall(
+      { email: email.current.value, password: password.current.value },
+      dispatch
+    );
+  };
+
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -35,12 +45,25 @@ export default function Login() {
               ref={password}
               className="loginInput"
             />
-            <button className="loginButton" type="submit" onClick={clickHandler}>
-              Log In
+            <button
+              className="loginButton"
+              type="submit"
+              onClick={clickHandler}
+              disabled={isFetching}
+            >
+              {isFetching ? (
+                <FontAwesomeIcon icon={faSpinner} spin />
+              ) : (
+                "Log In"
+              )}
             </button>
             <span className="loginForgot">Forgot Password?</span>
-            <button className="loginRegisterButton">
-              Create a New Account
+            <button className="loginRegisterButton" disabled={isFetching}>
+              {isFetching ? (
+                <FontAwesomeIcon icon={faSpinner} spin />
+              ) : (
+                "Create new Account"
+              )}
             </button>
           </form>
         </div>

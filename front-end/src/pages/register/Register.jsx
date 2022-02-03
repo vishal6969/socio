@@ -1,8 +1,35 @@
+import axios from "axios";
+import { useRef } from "react";
 import "./register.css";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-
+  const email = useRef();
+  const username = useRef();
+  const password = useRef();
+  const passwordAgain = useRef();
+  const history = useNavigate();
+  
+  const clickHandler = async (e) => {
+    e.preventDefault();
+    if (password.current.value !== passwordAgain.current.value) {
+      passwordAgain.current.setCustomValidity("Password do not match");
+    }
+    else {
+      const user = {
+        email: email.current.value,
+        password: password.current.value,
+        username: username.current.value
+      };
+      try {
+        await axios.post("/auth/register", user);
+        history("/login");
+      }
+      catch (err) {
+        console.log(err);
+      }
+    } 
+  }
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -13,17 +40,19 @@ export default function Register() {
           </span>
         </div>
         <div className="loginRight">
-          <form className="loginBox">
+          <form className="loginBox" onSubmit={clickHandler}>
             <input
               placeholder="Username"
               required
               className="loginInput"
+              ref={username}
             />
             <input
               placeholder="Email"
               required
               className="loginInput"
               type="email"
+              ref={email}
             />
             <input
               placeholder="Password"
@@ -31,12 +60,14 @@ export default function Register() {
               className="loginInput"
               type="password"
               minLength="6"
+              ref={password}
             />
             <input
               placeholder="Password Again"
               required
               className="loginInput"
               type="password"
+              ref={passwordAgain}
             />
             <button className="loginButton" type="submit">
               Sign Up

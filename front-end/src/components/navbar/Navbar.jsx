@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import "./navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faCommentDots, faBell } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 function Navbar(params) {
+
+  const { user } = useContext(AuthContext);
+
     return (
       <div className="topbarContainer">
         <div className="topbarLeft">
@@ -39,7 +43,9 @@ function Navbar(params) {
               <span className="topbarIconBadge">1</span>
             </div>
           </div>
-          <img src="/assets/person/1.jpeg" alt="" className="topbarImg" />
+          <Link to={`/profile/${user.username}`}>
+          <img src={user.profilePhoto?user.profilePhoto:"/assets/person/noAvatar.png"} alt="" className="topbarImg" />
+          </Link>
         </div>
       </div>
     );
