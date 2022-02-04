@@ -1,20 +1,31 @@
 import "./post.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Post({ post }) {
 
   const [like, setLike] = useState(post.likes.length);
   const [isLike, setIsLike] = useState(false);
   const [user, setUser] = useState({});
+  const { user:curUser } = useContext(AuthContext);
 
-  const likeHandler = () => {
+  useEffect(() => {
+    setIsLike(post.likes.includes(curUser._id));
+  }, [post.likes, curUser._id]);
+
+  const likeHandler = async () => {
+    try {
+      await axios.put("/post/" + post._id + "/like", { userId:curUser._id });
+    }
+    catch (err) {
+      console.log(err);
+    }
     setLike(isLike ? like-1 : like+1);
-    setIsLike(!isLike);
   }
 
   useEffect(() => {
