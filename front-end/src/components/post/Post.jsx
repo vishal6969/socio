@@ -1,6 +1,6 @@
 import "./post.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faArrowCircleUp } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { format } from "timeago.js";
@@ -9,10 +9,11 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function Post({ post }) {
 
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [like, setLike] = useState(post.likes.length);
   const [isLike, setIsLike] = useState(false);
   const [user, setUser] = useState({});
-  const { user:curUser } = useContext(AuthContext);
+  const { user: curUser } = useContext(AuthContext);
 
   useEffect(() => {
     setIsLike(post.likes.includes(curUser._id));
@@ -25,7 +26,8 @@ export default function Post({ post }) {
     catch (err) {
       console.log(err);
     }
-    setLike(isLike ? like-1 : like+1);
+    setLike(isLike ? like - 1 : like + 1);
+    setIsLike(!isLike);
   }
 
   useEffect(() => {
@@ -45,7 +47,10 @@ export default function Post({ post }) {
             <Link to={`/profile/${user.username}`}>
             <img
               className="postProfileImg"
-              src={user.profilePhoto||"/assets/person/noAvatar.png"}
+                src={
+                  user.profilePhoto ?
+                    PF + "/"+user.profilePhoto :
+                    "/assets/person/noAvatar.png"}
               alt=""
               />
               </Link>
@@ -53,25 +58,25 @@ export default function Post({ post }) {
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
-            <FontAwesomeIcon icon={faPlus} />
+            <FontAwesomeIcon icon={faArrowCircleUp}/>
           </div>
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={post.img} alt="" />
+          <img className="postImg" src={PF+"/"+post.img} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
             <img
               className="likeIcon"
-              onClick = {likeHandler}
-              src="/assets/like.png"
+              onClick={likeHandler}
+              src={`${PF}/like.png`}
               alt=""
             />
             <img
               className="likeIcon"
               onClick = {likeHandler}
-              src="/assets/heart.png"
+              src={`${PF}/heart.png`}
               alt=""
             />
             <span className="postLikeCounter">{like} people like it</span>

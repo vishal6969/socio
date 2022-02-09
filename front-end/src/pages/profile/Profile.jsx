@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Profile() {
+
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
   const username = useParams().username;
 
@@ -30,12 +32,20 @@ export default function Profile() {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src={user.coverPhoto || "/assets/person/noCover.png"}
+                src={
+                  user.coverPhoto ?
+                  PF + user.coverPhoto :
+                  "/assets/person/noCover.png"
+                }
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src={user.profilePhoto || "/assets/person/noAvatar.png"}
+                src={
+                  user.profilePhoto
+                    ? PF + user.profilePhoto
+                    : "/assets/person/noAvatar.png"
+                }
                 alt=""
               />
             </div>

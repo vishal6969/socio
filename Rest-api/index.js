@@ -16,6 +16,8 @@ mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopol
     console.log("mongoDb working");
 })
 
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+
 //middlewares
 app.use(express.json());
 app.use(helmet());
@@ -23,7 +25,7 @@ app.use(morgan("common"));
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "/public/images");
+        cb(null, "public/images/");
     },
     filename: (req, file, cb) => {
         cb(null, req.body.name);
@@ -42,7 +44,6 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);
-app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 app.listen("8800", () => {
     console.log("server working");
