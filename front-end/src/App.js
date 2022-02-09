@@ -4,8 +4,9 @@ import Login from "../src/pages/login/Login";
 import Register from "../src/pages/register/Register";
 
 import { Route, Routes, BrowserRouter ,Navigate} from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext} from "react";
 import { AuthContext } from "./context/AuthContext";
+import Messenger from "./pages/messenger/Messenger";
 
 function App() {
 
@@ -23,6 +24,10 @@ function App() {
           <Route
             path="/register"
             element={user ? <Navigate replace to="/" /> : <Register />}
+          ></Route>
+          <Route
+            path="/messenger"
+            element={!user ? <Navigate replace to="/" /> : <Messenger />}
           ></Route>
         </Routes>
       </BrowserRouter>
