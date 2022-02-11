@@ -13,7 +13,7 @@ function Navbar(params) {
     return (
       <div className="topbarContainer">
         <div className="topbarLeft">
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
             <span className="logo">Socio</span>
           </Link>
         </div>
@@ -36,7 +36,9 @@ function Navbar(params) {
               <span className="topbarIconBadge">1</span>
             </div>
             <div className="topbarIconItem">
-              <FontAwesomeIcon icon={faCommentDots} />
+              <Link to="/messenger" style={{ color: "white" }}>
+                <FontAwesomeIcon icon={faCommentDots} />
+              </Link>
               <span className="topbarIconBadge">2</span>
             </div>
             <div className="topbarIconItem">
@@ -45,7 +47,15 @@ function Navbar(params) {
             </div>
           </div>
           <Link to={`/profile/${user.username}`}>
-          <img src={user.profilePhoto?PF+user.profilePhoto:"/assets/person/noAvatar.png"} alt="" className="topbarImg" />
+            <img
+              src={
+                user.profilePhoto
+                  ? PF + user.profilePhoto
+                  : "/assets/person/noAvatar.png"
+              }
+              alt=""
+              className="topbarImg"
+            />
           </Link>
         </div>
       </div>

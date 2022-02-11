@@ -13,22 +13,38 @@ export default function Messenger() {
   const [messages, setMessages] = useState([]);
   const [curChat, setCurChat] = useState(null);
   const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [onlineFriends, setOnlineFriends] = useState([]);
   const { user } = useContext(AuthContext);
-  const [socket, setSocket] = useState(null);
+  const socket = useRef();
   const scroll = useRef();
 
   useEffect(() => {
-    setSocket(io("ws://localhost:8900"));
+    socket.current = io("ws://localhost:8900");
+    socket.current.on("getMessage", (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
   }, []);
 
   useEffect(() => {
-    socket?.on("lomda", (message) => {
-      console.log(message);
-    });
-  }, [socket]);
+    arrivalMessage &&
+      curChat?.members.includes(arrivalMessage.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, curChat]);
 
   useEffect(() => {
-    const fetchFriends = async () => {
+    socket.current.emit("addUser", user._id);
+    socket.current.on("getUsers", (users) => {
+      setOnlineFriends(user.following.filter(f => users.some(u => u.userId === f)));
+    });
+  }, [user]);
+
+  useEffect(() => {
+    const fetchConversations = async () => {
       try {
         const res = await axios.get("/conversation/" + user._id);
         setConversations(res.data);
@@ -36,8 +52,8 @@ export default function Messenger() {
         console.log(err);
       }
     };
-    fetchFriends();
-  }, [user._id]);
+    fetchConversations();
+  }, [user]);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -57,6 +73,14 @@ export default function Messenger() {
       text: newMessage,
       conversationId: curChat._id,
     };
+
+    const receiverId = curChat.members.find((member) => member !== user._id);
+    socket.current.emit("sendMessage", {
+      senderId: user._id,
+      receiverId,
+      text: newMessage,
+    });
+
     try {
       const res = await axios.post("/message", message);
       setMessages([...messages, res.data]);
@@ -69,6 +93,7 @@ export default function Messenger() {
   useEffect(() => {
     scroll.current?.scrollIntoView({ behaviour: "smooth" });
   }, [messages]);
+
   return (
     <>
       <Navbar />
@@ -117,11 +142,7 @@ export default function Messenger() {
         </div>
         <div className="chatOnline">
           <div className="chatOnlineWrapper">
-            <ChatOnline />
-            <ChatOnline />
-            <ChatOnline />
-            <ChatOnline />
-            <ChatOnline />
+            <ChatOnline online={onlineFriends} curUser={ user._id} setCurChat= {setCurChat} />
           </div>
         </div>
       </div>
