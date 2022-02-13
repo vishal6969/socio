@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 export default function Rightbar({ user }) {
-  
   const { user: curUser, dispatch } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
@@ -47,6 +46,24 @@ export default function Rightbar({ user }) {
     }
   };
 
+  const messageHandler = async () => {
+    try {
+      const res = await axios.get(
+        "/conversation/find/" + user._id + "/" + curUser._id
+      );
+      if (!res.data) {
+        const newConversastion = {
+          sender: curUser._id,
+          receiver: user._id,
+        };
+        await axios.post("/conversation/", newConversastion);
+      }
+      window.location.pathname = "/messenger";
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const HomeRightbar = () => {
     return (
       <>
@@ -71,10 +88,19 @@ export default function Rightbar({ user }) {
     return (
       <>
         {user.username !== curUser.username && (
-          <button className="rightbarFollowButton" onClick={followHandler}>
-            {followed ? "Unfollow" : "Follow"}
-            <FontAwesomeIcon icon={followed ? faMinus : faPlus} />
-          </button>
+          <div className="rightbarButtons">
+            <button
+              className="rightbarMessage"
+              onClick={messageHandler}
+              disabled={!followed}
+            >
+              Message
+            </button>
+            <button className="rightbarFollowButton" onClick={followHandler}>
+              {followed ? "Unfollow" : "Follow"}
+              <FontAwesomeIcon icon={followed ? faMinus : faPlus} />
+            </button>
+          </div>
         )}
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
@@ -103,13 +129,13 @@ export default function Rightbar({ user }) {
             <Link
               key={friend._id}
               to={"/profile/" + friend.username}
-              style={{ textDecoration: "none" }}
+              style={{ textDecoration: "none", color: "black" }}
             >
               <div key={friend.id} className="rightbarFollowing">
                 <img
                   src={
                     friend.profilePhoto
-                      ? PF + friend.profilePhoto
+                      ? PF + "/"+friend.profilePhoto
                       : "/assets/person/noAvatar.png"
                   }
                   alt=""

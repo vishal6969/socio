@@ -2,6 +2,7 @@ import axios from "axios";
 import { useRef } from "react";
 import "./register.css";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const email = useRef();
@@ -9,27 +10,25 @@ export default function Register() {
   const password = useRef();
   const passwordAgain = useRef();
   const history = useNavigate();
-  
+
   const clickHandler = async (e) => {
     e.preventDefault();
     if (password.current.value !== passwordAgain.current.value) {
       passwordAgain.current.setCustomValidity("Password do not match");
-    }
-    else {
+    } else {
       const user = {
         email: email.current.value,
         password: password.current.value,
-        username: username.current.value
+        username: username.current.value,
       };
       try {
         await axios.post("/auth/register", user);
         history("/login");
-      }
-      catch (err) {
+      } catch (err) {
         console.log(err);
       }
-    } 
-  }
+    }
+  };
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -72,7 +71,14 @@ export default function Register() {
             <button className="loginButton" type="submit">
               Sign Up
             </button>
-            <button className="loginRegisterButton">Log into Account</button>
+            <button className="loginRegisterButton">
+              <Link
+                to="/login"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Log into Account
+              </Link>
+            </button>
           </form>
         </div>
       </div>

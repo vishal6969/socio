@@ -5,7 +5,6 @@ import {
   faShareSquare,
   faCompass,
   faLaughBeam,
-  faStopCircle,
   faMinusCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useRef, useState } from "react";
@@ -15,7 +14,7 @@ import axios from "axios";
 export default function Share() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user } = useContext(AuthContext);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState("");
   const desc = useRef();
 
   const submitHandler = async (e) => {
@@ -49,7 +48,7 @@ export default function Share() {
             className="shareProfileImg"
             src={
               user.profilePhoto
-                ? PF+user.profilePhoto
+                ? PF+"/"+user.profilePhoto
                 : "/assets/person/noAvatar.png"
             }
             alt=""
@@ -64,7 +63,7 @@ export default function Share() {
         {file && (
           <div className="shareImgContainer">
             <img src={URL.createObjectURL(file)} alt="" className="shareImg" />
-            <FontAwesomeIcon className="shareCancelImg" icon={faMinusCircle} onClick={()=>setFile(null)}/>
+            <FontAwesomeIcon className="shareCancelImg" icon={faMinusCircle} onClick={()=>setFile("")}/>
           </div>
         )}
         <form className="shareBottom" onSubmit={submitHandler}>

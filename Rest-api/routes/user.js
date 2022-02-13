@@ -48,7 +48,7 @@ router.get("/", async (req, res) => {
   try {
     const user = userId
       ? await User.findById(userId)
-        : await User.findOne({ username:username });
+      : await User.findOne({ username: username });
     const { password, updatedAt, ...other } = user._doc;
     res.status(200).json(other);
   } catch (err) {
@@ -58,14 +58,14 @@ router.get("/", async (req, res) => {
 
 //get user friendList
 router.get("/friends/:id", async (req, res) => {
-  
   try {
     const user = await User.findById(req.params.id);
     const friends = await Promise.all(
       user.following.map((fid) => {
         return User.findById(fid);
-      }));
-    
+      })
+    );
+
     const friendList = [];
 
     friends.map((f) => {
@@ -74,11 +74,10 @@ router.get("/friends/:id", async (req, res) => {
     });
 
     res.status(200).json(friendList);
-
   } catch (err) {
     res.status(500).json(err);
   }
-})
+});
 //follow user
 router.put("/:id/follow", async (req, res) => {
   if (req.body.userId !== req.params.id) {

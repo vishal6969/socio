@@ -39,7 +39,7 @@ export default function ChatOnline({ online, curUser, setCurChat }) {
                 className="chatOnlineImg"
                 src={
                   o.profilePhoto
-                    ? PF + o.profilePhoto
+                    ? PF + "/"+o.profilePhoto
                     : "/assets/person/noAvatar.png"
                 }
                 alt=""

@@ -9,6 +9,7 @@
 .profileCover{
     height: 320px;
     position: relative;
+    cursor: pointer;
 }
 
 .profileCoverImg{
@@ -48,4 +49,13 @@
 
 .profileRightBottom{
     display: flex;
+}
+
+.userNotFound{
+    flex: 7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:cyan;
+    font-size: xx-large;
 }

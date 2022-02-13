@@ -31,9 +31,23 @@ const AuthReducer = (state, action) => {
         ...state,
         user: {
           ...state.user,
-          following: state.user.following.filter(
-            (f) => f !== action.payload
-          ),
+          following: state.user.following.filter((f) => f !== action.payload),
+        },
+      };
+    case "AVATAR":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          profilePhoto: action.payload,
+        },
+      };
+    case "COVER":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          coverPhoto: action.payload,
         },
       };
     default:

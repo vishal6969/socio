@@ -20,3 +20,14 @@ export const Unfollow = (userId) => ({
   type: "UNFOLLOW",
   payload: userId,
 });
+
+export const Avatar = (img) => ({
+  type: "UNFOLLOW",
+  payload: img,
+});
+
+export const Cover = (img) => ({
+  type: "UNFOLLOW",
+  payload: img,
+});
+

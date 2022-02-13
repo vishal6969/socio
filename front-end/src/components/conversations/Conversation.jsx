@@ -26,7 +26,7 @@ export default function Conversation({convo, curUser}) {
     <div className="conversation">
       <img
         className="conversationImg"
-        src={user?.profilePhoto ? PF + user?.profilePhoto : "/assets/person/noAvatar.png"}
+        src={user?.profilePhoto ? PF +"/"+ user?.profilePhoto : "/assets/person/noAvatar.png"}
         alt=""
       />
       <span className="conversationName">{user?.username}</span>

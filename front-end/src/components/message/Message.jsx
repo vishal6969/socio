@@ -1,13 +1,28 @@
 import "./message.css";
 import { format } from "timeago.js";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function Message({message, own }) {
+export default function Message({ message, own }) {
+  
+  const [sender, setSender] = useState(null);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  useEffect(() => {
+    const fetchSender = async () => {
+      const res = await axios.get("/user?userId=" + message?.sender);
+      setSender(res.data);
+    }
+
+    fetchSender();
+  }, [message.sender]);
+
   return (
     <div className={own ? "message own" : "message"}>
       <div className="messageTop">
         <img
           className="messageImg"
-          src="https://images.pexels.com/photos/3686769/pexels-photo-3686769.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+          src={sender?.profilePhoto ? PF+"/"+sender.profilePhoto : "/assets/person/noAvatar.png"}
           alt=""
         />
         <p className="messageText">{message.text}</p>
