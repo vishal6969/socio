@@ -13,8 +13,6 @@ function Navbar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user } = useContext(AuthContext);
 
-  console.log(user);
-
   const search = useRef();
   const searchUser = async (e) => {
     if (e.keyCode === 13)

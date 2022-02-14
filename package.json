@@ -1,0 +1,23 @@
+{
+  "name": "social_media_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd Rest-api && npm start\" \"cd socket && npm start\" \"cd front-end && npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vishal6969/socio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vishal6969/socio/issues"
+  },
+  "homepage": "https://github.com/vishal6969/socio#readme",
+  "dependencies": {
+    "concurrently": "^7.0.0"
+  }
+}
