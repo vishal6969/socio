@@ -17,7 +17,7 @@ function Navbar() {
 
   const search = useRef();
   const searchUser = async (e) => {
-    if (e.keyCode == 13)
+    if (e.keyCode === 13)
       window.location.pathname = "/profile/" + search.current.value;
   };
 

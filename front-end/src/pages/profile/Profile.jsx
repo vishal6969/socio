@@ -54,7 +54,7 @@ export default function Profile() {
           await axios.post("/upload", data);
         } catch (err) {}
         try {
-          const res = await axios.put("/user/" + curUser._id, updatedUser);
+          await axios.put("/user/" + curUser._id, updatedUser);
           dispatch({ type: "AVATAR", payload: fileName });
           window.location.reload();
         } catch (err) {
@@ -64,7 +64,7 @@ export default function Profile() {
     };
 
     updateAvatar();
-  }, [avatar]);
+  }, [avatar, curUser._id, dispatch]);
 
   useEffect(() => {
     const updateCover = async () => {
@@ -83,7 +83,7 @@ export default function Profile() {
           await axios.post("/upload", data);
         } catch (err) {}
         try {
-          const res = await axios.put("/user/" + curUser._id, updatedUser);
+          await axios.put("/user/" + curUser._id, updatedUser);
           dispatch({ type: "COVER", payload: fileName });
           window.location.reload();
         } catch (err) {
@@ -93,7 +93,7 @@ export default function Profile() {
     };
 
     updateCover();
-  }, [cover]);
+  }, [cover, curUser._id, dispatch]);
 
   return (
     <>

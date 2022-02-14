@@ -25,7 +25,7 @@ export default function Rightbar({ user }) {
     };
     fetchFriends();
     setFollowed(curUser.following.includes(user?._id));
-  }, [user]);
+  }, [user, curUser.following]);
 
   const followHandler = async () => {
     try {
